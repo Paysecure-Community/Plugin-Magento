@@ -1,0 +1,130 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice paysecure-payment">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"
+        />
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span data-bind="text: tpl_getData().title"></span>
+        </label>
+        <div data-bind="if: tpl_getData().payment_method_selection_enabled">
+            <div class="payment-method-select">
+                <div data-bind="attr: {'data-countries-available': tpl_getCountries().length}" style="margin-bottom: 8px;"><label>
+                    <select name="country" class="form-control" id="paysecure-country" title="Country"
+                        data-bind="foreach: tpl_getCountries()"
+                    >
+                        <option data-bind="attr: {'value': $data.value}, text: $data.name"></option>
+                    </select>
+                </label></div>
+
+                <span class="payment-method-list" data-bind="foreach: tpl_getPaymentMethods()">
+                    <label style="padding: 1em; width: 250px;">
+                        <input type="radio"
+                               required="required"
+                               name="paysecure_payment_method"
+                               class="paysecure-payment-method"
+                               data-bind="attr: {'value': $data.payment_method, 'data-countries': $data.countries_json}"
+                        />
+                        <!-- ko if: $data.single_logo -->
+                            <div>
+                                <img data-bind="attr: {'src': $data.single_logo}"
+                                     height="30"
+                                     style="max-width: 160px; max-height: 30px; margin-bottom: 13px;"
+                                />
+                            </div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: $data.single_logo -->
+                            <span style="display: block;
+                                  padding-bottom: 3px;
+                                  min-width: 200px;
+                                  max-width: 200px;"
+                            >
+                                <!-- ko foreach: $data.logo_urls -->
+                                    <img data-bind="attr: {'src': $data}"
+                                         width="40" height="35"
+                                         style="margin: 0 10px 10px 0; float: left;"
+                                    />
+                                <!--/ko-->
+                                <div class="clear-div"></div>
+                            </span>
+                        <!-- /ko -->
+
+                        <div class="payment-method-cell-caption" data-bind="text: $data.name"></div>
+                    </label>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div data-bind="afterRender: paysecure_fillPaymentMethodTemplate()"></div>
+    <!-- shows up when you select this option -->
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="click: placeOrder, enable: (getCode() == isChecked())"
+                        disabled>
+                    <span data-bind="i18n: 'Continue to payment'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .paysecure-payment {
+        padding: 0px 0px;
+    }
+    .paysecure-payment .payment-method-select {
+        background-color: #e6e6e6;
+        padding: 8px;
+    }
+    .paysecure-payment .payment-method-select > [data-countries-available="1"],
+    .paysecure-payment .payment-method-select > [data-countries-available="0"] {
+        display: none;
+    }
+    .paysecure-payment .payment-method-list {
+        display: flex;
+        flex-wrap: wrap;
+        flex-flow: row wrap;
+        margin: 4px;
+    }
+    .paysecure-payment .payment-method-list > label {
+        background-color: #dedede;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        border-radius: 15px;
+        padding: 6px;
+    }
+    .paysecure-payment .payment-method-list .clear-div {
+        clear: both;
+        background-color: transparent;
+    }
+    .paysecure-payment .payment-method-cell-caption {
+        /* text selection prevents option from being checked on click */
+        user-select: none;
+        pointer-events: none;
+        font-size: 14px;
+    }
+    input[type="radio"]#paysecure_checkout:not(:checked) ~ * .payment-method-select {
+        opacity: 0.2;
+        pointer-events: none;
+    }
+</style>

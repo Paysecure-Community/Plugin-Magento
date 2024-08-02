@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="PaySecure_Payments::admin"
+            title="PaySecure Payments"
+            module="PaySecure_Payments"
+            sortOrder="11"
+            parent="Magento_Sales::sales"
+            resource="PaySecure_Payments::view"
+        />
+    </menu>
+</config>

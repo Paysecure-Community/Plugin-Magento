@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <paysecure>
+                <model>PaySecure\Payments\Model\Method\Checkout</model>
+                <title>PaySecure Payments</title>
+                <payment_method_title>PaySecure Payments</payment_method_title>
+                <active>1</active>
+                <order_status>payment_review</order_status>
+                <transaction_type>payment</transaction_type>
+                <payment_action>order</payment_action>
+
+                <allowspecific>0</allowspecific>
+                <group>paysecure</group>
+            </paysecure>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="paysecure" translate="label comment" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>PaySecure Payments</label>
+        <frontend_model>PaySecure\Payments\Block\Adminhtml\System\Config\Fieldset\CheckoutPayment</frontend_model>
+
+        <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Enable API</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/paysecure/active</config_path>
+        </field>
+        <field id="payment_method_title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Change payment method title</label>
+            <comment>If not set, "Choose payment method on next page" will be used. Ignored if payment method selection is enabled</comment>
+            <config_path>payment/paysecure/payment_method_title</config_path>
+            <can_be_empty>0</can_be_empty>
+            <depends>
+                <field id="active">1</field>
+                <field id="payment_method_selection_enabled">0</field>
+            </depends>
+        </field>
+        <field id="payment_method_description" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Change payment method description</label>
+            <comment>If not set, "Select payment method" will be used</comment>
+            <config_path>payment/paysecure/payment_method_description</config_path>
+            <can_be_empty>0</can_be_empty>
+            <depends>
+                <field id="active">1</field>
+                <field id="payment_method_selection_enabled">1</field>
+            </depends>
+        </field>
+        <field id="brand_id" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Brand ID</label>
+            <comment>Please enter your brand ID</comment>
+            <config_path>payment/paysecure/brand_id</config_path>
+            <validate>required-entry</validate>
+            <can_be_empty>0</can_be_empty>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+        </field>
+        <field id="secret_key" translate="label" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Secret key</label>
+            <comment>Please enter your secret key</comment>
+            <config_path>payment/paysecure/secret_key</config_path>
+            <validate>required-entry</validate>
+            <can_be_empty>0</can_be_empty>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+        </field>
+        <field id="enable_logging" translate="label" sortOrder="110" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enable logging</label>
+            <comment>Log events to `/var/log`</comment>
+            <config_path>payment/paysecure/enable_logging</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+        </field>
+    </group>
+</include>
